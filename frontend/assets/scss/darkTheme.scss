@@ -1,0 +1,244 @@
+.theme--dark.v-sheet{
+  background-color: #08132f !important;
+}
+.theme--dark.v-card{
+  background-color: #08132f !important;
+
+  .v-list{
+    background: transparent !important;
+  }
+  
+}
+.theme--dark.v-list{
+  background-color: #08132f !important;
+}
+.theme--dark.v-data-table{
+  &.bgc {
+    background-color: #08132f !important;
+  }
+
+  &.v-data-table--fixed-header {
+    th{
+      background-color: #08132f !important;
+    }
+  }
+
+  .v-data-table-header {
+    // background-color: #08132f !important;
+  }
+  .v-data-table-footer{
+    border-top:thin solid rgba(255, 255, 255, 0.12) !important;
+  }
+}
+.theme--dark.v-expansion-panels{
+  .v-expansion-panel{
+    background-color: #08132f !important;
+  }
+  &:not(.v-expansion-panels--flat) {
+    .v-expansion-panel{
+      &::before{
+        box-shadow: 0px 3px 12px #08132f10 !important;
+      }
+    }
+  }
+}
+.theme--dark.v-bottom-navigation {
+  background-color: #08132f !important;
+}
+
+.theme--dark.v-application{
+  background: linear-gradient(#08132f, #08132f) !important;
+}
+
+// 기본 틀
+.theme--dark{
+  color: #fff;
+  //푸터
+  .v-footer{
+    background-color:#08132f !important;
+  }
+
+  .v-btn{
+    &.v-btn--has-bg{
+      background-color: #131835;
+      color: #fff;
+      .v-icon{
+        color: #fff !important;
+      }
+    }
+    &.v-btn--text{
+      background-color: #131835;
+      font-weight: bold;
+    }
+    &.primary{
+      background-color: #1E88E5 !important;
+    }
+  }
+
+  .v-date-picker-table{
+    .v-btn{
+      background-color: transparent;
+    }
+  }
+
+  //
+  .app-bar-wrap{
+    background-color: #08132f !important;
+    
+    .header-content {
+      background-color: #08132f;
+    }
+  }
+  
+  .v-navigation-drawer{
+    background-color: #08132f !important;
+    
+  }    
+  .project-type-wrap{
+    background-color:rgba(0, 0, 0, 0.7);
+  }
+
+  .v-list-group{
+    .v-list-group__items {
+      //background-color: #181898;
+    }
+  }
+
+  // 탭 배경
+  .v-tabs-bar{
+    background-color: transparent !important;
+  }
+
+  //project-card
+  .project-card{
+    .project-card-title{
+      background-color: #1e1e1e;
+    }
+  }
+
+  .task-table-wrap{
+    border-left:1px solid #1e1e1e;
+    background-color: #08132f;
+  }
+  .task-main-interface{
+    border-top: 1px solid #1e1e1e;
+    border-bottom: 1px solid #1e1e1e;
+  }
+  .vridge-tab-content{
+    background-color: transparent !important;
+  }
+
+
+  .editor-content{
+    .ql-editor{
+      background-color: #08132f;
+    }
+  }
+  .ql-toolbar.ql-snow{
+    border:1px solid #08132f;
+  }
+  .quillWrapper .ql-snow .ql-stroke{
+    stroke: #fff ;
+  }
+  .ql-snow .ql-fill{
+    fill: #fff ;
+  }
+  .ql-snow .ql-stroke.ql-fill{
+    stroke: #fff;
+  }
+  //글씨 크기 
+  .ql-toolbar.ql-snow .ql-picker-label{
+    color:#fff;
+  }
+
+   
+  //v-card 그림자 전역
+  .v-card{
+    box-shadow: 0px 3px 12px #08132f10 !important;
+  }
+  .v-card--flat{
+    box-shadow:none !important;
+  }
+
+  .v-menu__content{
+    box-shadow: 0px 3px 12px #08132f10 !important;
+  }
+
+  .v-skeleton-loader__list-item-avatar {
+    background: transparent !important;
+  }
+
+  .v-input--checkbox{
+    i{
+      color:#ffffff80;
+    }
+  }
+  
+
+
+  .no-shadow{
+    .v-card{
+      box-shadow:none !important;
+    }
+    
+    .v-input__slot{
+      box-shadow:none !important;
+    }
+  }
+
+  .vhl-btn-left{
+    // background: linear-gradient(to right, rgba(18,18,18,0.5), rgba(18,18,18,0)) !important;
+    // width:150px !important;
+    // height:256px !important;
+    // border-radius: 0% !important;
+    // box-shadow: none !important;
+    border:none !important;
+    background:#1e1e1e !important;
+  }
+  .vhl-btn-right{
+    // background: linear-gradient(to left, rgba(18,18,18,0.5), rgba(18,18,18,0)) !important;
+    // width:150px !important;
+    // height:256px !important;
+    // border-radius: 0% !important;
+    // box-shadow: none !important;
+    border:none !important;
+    background:#1e1e1e !important;
+  }
+
+  // snotify 배경색
+  .snotifyToast{
+    background-color: #282a32;
+    border:1px solid rgba(56,56,56,0.3);
+  }
+
+  .calendar-container{
+    background-color: #272727;
+    border-color: rgba(255, 255, 255, 0.12);
+  }
+
+  .v-text-field--solo{
+    .v-input__slot{
+      background-color: #28323c !important;
+
+      &.transparent{
+        background: transparent !important;
+        background-color: transparent !important;
+      }
+    }
+  }
+  
+  // v-swatch
+  .vue-swatches .vue-swatches__container .vue-swatches__wrapper {
+    background-color: #08132f;
+  }
+
+  
+  .transparent{
+    background: transparent !important;
+    background-color: transparent !important;
+  }
+
+  &.primary{
+    background-color: #1E88E5 !important;
+  }
+}

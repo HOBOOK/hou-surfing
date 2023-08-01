@@ -1,0 +1,26 @@
+// Ref: https://github.com/nuxt-community/vuetify-module#customvariables
+//
+// The variables you want to modify
+// $font-size-root: 20px;
+
+$menu-content-elevation: 1;
+
+$list-item-dense-title-font-size: 1rem;
+$list-dense-min-height: 42px;
+
+$tooltip-background-color: #fff;
+$tooltip-text-color :#1E88E5;
+$tooltip-opacity:1;
+$tooltip-transition-enter-duration: 0ms;
+$tooltip-transition-leave-duration: 0ms;
+$tooltip-transition-timing-function: none;
+$tooltip-font-size: 13px;
+$tooltip-padding: 4px 12px;
+$tooltip-border-radius: 0.4rem;
+
+$default-border-color: rgba(127, 127, 127, 0.1);
+
+
+$text-field-outlined-border-light: #e0e0e0;
+$text-field-outlined-border-dark: #5a5d62;
+$text-field-outlined-fieldset-border: #1E88E5;
