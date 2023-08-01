@@ -75,7 +75,6 @@ const utils = {
 
 
 Vue.prototype.$utils = utils;
-Vue.prototype.$regular = regular;
 
 
 export default ({app}, inject) => {
