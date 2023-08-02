@@ -2,14 +2,16 @@
   <v-app class="default-layout-container">
     <v-app-bar
       app
+      fixed
       flat
       clipped-left
+      collapse-on-scroll
     >
       <v-container>
         <v-row no-gutters align="center">
           <v-btn text plain @click="$router.push('/')" class="mx-0 px-0">
             <v-icon color="primary" left>mdi-surfing</v-icon>
-            <strong class="system-title primary--text">Hou-surfing</strong>
+            <strong class="system-title primary--text">호우서핑</strong>
           </v-btn>
           
           <v-spacer/>
@@ -179,6 +181,7 @@ export default{
     
     .system-title{
       padding:0px 8px 0 12px; font-size:1.1rem;
+      font-family: "Pretendard-ExtraBold", sans-serif !important;
     }
   }
 }

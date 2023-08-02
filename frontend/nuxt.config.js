@@ -77,7 +77,7 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
-    '@nuxtjs/auth',
+    // '@nuxtjs/auth',ㅈ
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
     'nuxt-route-meta',
@@ -179,64 +179,64 @@ export default {
     // middleware: ['loading'],
   },
 
-  auth:{
-    //localStorage: false,
-    watchLoggedIn: true,
-    // plugins:[
-    //   '~/middleware/auth.js'
-    // ],
-    strategies:{
-      redirect: {
-        login: '/auth/login',
-        logout: '/auth/login',
-        callback: false,
-        home: false
-      },
-      local: {
-        scheme: 'refresh',
-        token: {
-          maxAge: 1800,
-          global: true,
-          required: false,
-          property: 'token',
-        },
-        refreshToken: {
-          maxAge: 60 * 60 * 24 * 7,
-          property: 'refreshToken',
-          data: 'refreshToken',
-          grantType: 'refreshToken'
-        },
-        autoFetch:false,
-        user:{
-          property: 'user',
-          autoFetch:false
-        },
-        endpoints: {
-          login: { url: 'auth/login', method: 'post',propertyName: 'token' },
-          user: { url: 'auth/user', method: 'get', propertyName:false },
-          refresh: { url: 'auth/refresh', method: 'post', propertyName: 'refreshToken'},
-          logout:false,
-        },
-        //tokenType:'',
-        tokenRequired: true,
-        cookie: {
-          prefix: "auth.",
-          options: {
-            path: "/",
-          }
-        },
-        localStorage: {
-          prefix: "auth."
-        },
-      },
-      google:{
-        _scheme: 'oauth2',
-        scope: ['openid', 'profile', 'email'],
-        response_type: 'token',
-        client_id: '877979614075-2d38epanvv8rc6cctkj7fu7jshavihag.apps.googleusercontent.com'
-      }
-    },
-  },
+  // auth:{
+  //   //localStorage: false,
+  //   watchLoggedIn: true,
+  //   // plugins:[
+  //   //   '~/middleware/auth.js'
+  //   // ],
+  //   strategies:{
+  //     redirect: {
+  //       login: '/auth/login',
+  //       logout: '/auth/login',
+  //       callback: false,
+  //       home: false
+  //     },
+  //     local: {
+  //       scheme: 'refresh',
+  //       token: {
+  //         maxAge: 1800,
+  //         global: true,
+  //         required: false,
+  //         property: 'token',
+  //       },
+  //       refreshToken: {
+  //         maxAge: 60 * 60 * 24 * 7,
+  //         property: 'refreshToken',
+  //         data: 'refreshToken',
+  //         grantType: 'refreshToken'
+  //       },
+  //       autoFetch:false,
+  //       user:{
+  //         property: 'user',
+  //         autoFetch:false
+  //       },
+  //       endpoints: {
+  //         login: { url: 'auth/login', method: 'post',propertyName: 'token' },
+  //         user: { url: 'auth/user', method: 'get', propertyName:false },
+  //         refresh: { url: 'auth/refresh', method: 'post', propertyName: 'refreshToken'},
+  //         logout:false,
+  //       },
+  //       //tokenType:'',
+  //       tokenRequired: true,
+  //       cookie: {
+  //         prefix: "auth.",
+  //         options: {
+  //           path: "/",
+  //         }
+  //       },
+  //       localStorage: {
+  //         prefix: "auth."
+  //       },
+  //     },
+  //     google:{
+  //       _scheme: 'oauth2',
+  //       scope: ['openid', 'profile', 'email'],
+  //       response_type: 'token',
+  //       client_id: '877979614075-2d38epanvv8rc6cctkj7fu7jshavihag.apps.googleusercontent.com'
+  //     }
+  //   },
+  // },
 
   generate: {
     minify: {
