@@ -3,12 +3,7 @@
     <page-body class="index-container">
       <div class="three-background">
         <div id="container"></div>
-        <div id="menu">
-			<button id="table">TABLE</button>
-			<button id="sphere">SPHERE</button>
-			<button id="helix">HELIX</button>
-			<button id="grid">GRID</button>
-		</div>
+        
       </div>
 
       <v-row no-gutters align="center" justify="center">
@@ -33,6 +28,15 @@
                 </v-list-item-content>
               </v-list-item>
             </v-card-title>
+
+            <v-card-actions>
+              <div id="menu">
+                <button id="table">TABLE</button>
+                <button id="sphere">SPHERE</button>
+                <button id="helix">HELIX</button>
+                <button id="grid">GRID</button>
+              </div>
+            </v-card-actions>
           </v-card>
         </v-col>
 
@@ -198,18 +202,14 @@ export default {
       scene = new THREE.Scene();
       scene.fog = new THREE.FogExp2( 0xe0e0e0, 0.01 );
 
-      renderer = new THREE.WebGLRenderer({alpha: true, preserveDrawingBuffer: true, antialias:true });
-      renderer.setClearColor(0xffffff, 0)
-
       const width = window.innerWidth// space.parentElement.clientWidth
       const height = window.innerHeight //space.parentElement.clientHeight
-      
-      renderer.setSize( width, height );
-      renderer.shadowMap.enabled = true;
-      renderer.shadowMap.soft = true;
-      
-      space.appendChild( renderer.domElement );
 
+
+      renderer = new CSS3DRenderer();
+      renderer.setSize( width, height );
+      space.appendChild( renderer.domElement );
+      
       light = new THREE.DirectionalLight(0xffffff, 1);
       light.castShadow = true;
       light.shadow.mapSize.x = 2048
@@ -240,41 +240,7 @@ export default {
 				controls.maxDistance = 6000;
 				controls.addEventListener( 'change', this.render );
 
-				const buttonTable = document.getElementById( 'table' );
-				buttonTable.addEventListener( 'click', () => {
-
-					this.transform( targets.table, 2000 );
-
-				} );
-
-				const buttonSphere = document.getElementById( 'sphere' );
-				buttonSphere.addEventListener( 'click', () =>  {
-
-					this.transform( targets.sphere, 2000 );
-
-				} );
-
-				const buttonHelix = document.getElementById( 'helix' );
-				buttonHelix.addEventListener( 'click', () =>  {
-
-					this.transform( targets.helix, 2000 );
-
-				} );
-
-				const buttonGrid = document.getElementById( 'grid' );
-				buttonGrid.addEventListener( 'click', () =>  {
-
-					this.transform( targets.grid, 2000 );
-
-				} );
-
-				this.transform( targets.table, 2000 );
-
-				//
-
-				window.addEventListener( 'resize', this.onWindowResize );
-
-        this.animate()
+				
 
       
 
@@ -377,9 +343,42 @@ export default {
 
           //
 
-          renderer = new CSS3DRenderer();
-          renderer.setSize( window.innerWidth, window.innerHeight );
-          document.getElementById( 'container' ).appendChild( renderer.domElement );
+          const buttonTable = document.getElementById( 'table' );
+				buttonTable.addEventListener( 'click', () => {
+
+					this.transform( targets.table, 2000 );
+
+				} );
+
+				const buttonSphere = document.getElementById( 'sphere' );
+				buttonSphere.addEventListener( 'click', () =>  {
+
+					this.transform( targets.sphere, 2000 );
+
+				} );
+
+				const buttonHelix = document.getElementById( 'helix' );
+				buttonHelix.addEventListener( 'click', () =>  {
+
+					this.transform( targets.helix, 2000 );
+
+				} );
+
+				const buttonGrid = document.getElementById( 'grid' );
+				buttonGrid.addEventListener( 'click', () =>  {
+
+					this.transform( targets.grid, 2000 );
+
+				} );
+
+				this.transform( targets.helix, 2000 );
+
+				//
+
+				window.addEventListener( 'resize', this.onWindowResize );
+
+        this.animate()
+
     },
 
     transform( targets, duration ) {

@@ -1,6 +1,6 @@
 <template>
     <div class="github-calendar-container">
-        <v-icon class="man" x-large  style="fontSize: 10rem !important;">mdi-surfing</v-icon>
+        <v-icon class="man" style="fontSize: 7vw !important;">mdi-surfing</v-icon>
         <v-img src="https://ghchart.rshah.org/1E88E5/HOBOOK"
             style="width:100% !important;"
             contain
