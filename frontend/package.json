@@ -16,6 +16,7 @@
     "@nuxtjs/dotenv": "^1.4.1",
     "@nuxtjs/pwa": "^3.3.5",
     "@nuxtjs/vuetify": "^1.11.3",
+    "@tweenjs/tween.js": "^21.0.0",
     "atob": "^2.1.2",
     "axios": "^0.21.1",
     "babel-plugin-transform-remove-console": "^6.9.4",
