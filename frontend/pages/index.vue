@@ -230,7 +230,9 @@ export default {
 			scene.add(ambientLight);
 
 			camera = new THREE.PerspectiveCamera(47, width / height, 0.1, 1000);
-			camera.position.z = 3000
+			camera.position.z = 800
+			camera.position.y = -300
+			camera.position.x = -300
 
 			// const controls = new OrbitControls(camera, renderer.domElement)
 			// controls.maxDistance = 150
