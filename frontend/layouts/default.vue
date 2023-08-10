@@ -5,37 +5,33 @@
       fixed
       flat
       clipped-left
-      collapse-on-scroll
+      shrink-on-scroll
+      color="transparent"
     >
-      <v-container>
+      <v-container fill-height>
         <v-row no-gutters align="center">
           <v-btn text plain @click="$router.push('/')" class="mx-0 px-0">
-            <v-icon color="primary" left>mdi-surfing</v-icon>
-            <strong class="system-title primary--text">호우서핑</strong>
+            <v-img src="/logo.png" contain width="48" height="48"/>
           </v-btn>
           
           <v-spacer/>
 
           <header-item :icon="!$vuetify?.theme.dark ? 'mdi-weather-sunny' : 'mdi-weather-night'" class="mr-3" @click="toggleTheme()"/>
 
-          <header-item icon="mdi-web">
-            <template v-slot:content>
-              <v-list :width="180" dense>
-                <v-list-item  @click="setLocale('ko')">
-                  한글
-                </v-list-item>
-                <v-divider/>
-                <v-list-item @click="setLocale('en')">
-                  English
-                </v-list-item>
-              </v-list>
-            </template>
+          <span class="text-subtitle-2">
+            {{ $i18n.locale }}
+          </span>
+          <header-item icon="mdi-web" @click="setLocale($i18n.locale === 'ko' ? 'en' : 'ko')">
+            
           </header-item>
+          
         </v-row>
       </v-container>
     </v-app-bar>
 
-    <v-main>
+    <Loading v-if="loadingInit"/>
+
+    <v-main v-else>
       <v-container>
           <vue-snotify></vue-snotify>
           <Nuxt />
@@ -61,7 +57,17 @@ export default{
   components: {
     SettingDialog
   },
+
+  beforeMount() {
+    if (process.client && !window.routeChanged) {
+      window.routeChanged = true;
+      this.loadingInit = true;
+      setTimeout(() => (this.loadingInit = false), 3000); // 설정한 duration 값으로 수정하세요.
+    }
+  },
+
   data:() => ({
+    loadingInit:false, 
     drawer: null, 
     notifications:[],
     navMenuList:[
@@ -177,7 +183,6 @@ export default{
   .v-app-bar {
     transition-property: transform, left, right, box-shadow, max-width, width;
     min-width: 320px;
-    border-bottom:2px solid $default-border-color !important;
     
     .system-title{
       padding:0px 8px 0 12px; font-size:1.1rem;

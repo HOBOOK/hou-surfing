@@ -1,6 +1,6 @@
 <template>
     <div class="github-calendar-container">
-        <v-icon class="man" style="fontSize: 7vw !important;">mdi-surfing</v-icon>
+        <v-icon class="man" style="fontSize: 5vw !important;">mdi-surfing</v-icon>
         <v-img src="https://ghchart.rshah.org/1E88E5/HOBOOK"
             style="width:100% !important;"
             contain
@@ -27,7 +27,7 @@ export default {
     position: relative;
     .man{
         position: absolute;
-        animation: suffing 5s infinite ease-in-out;
+        animation: suffing 3s infinite ease-in-out;
         z-index: 10;
         left:30px;
         top:0;

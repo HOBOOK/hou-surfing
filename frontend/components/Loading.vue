@@ -1,14 +1,32 @@
 <template>
   <div class="loading-container">
     <div class="loading-cover">
-      <strong>{{ $t('connecting') }}...</strong>
-      <br/>
-      <img  src="/logo_v2/s01.png" height="80"/>
-    </div>
+      <span class="fade_up_animation font-weight-bold delay_600">
+        Gyeongho Park
 
-    <div class="loading-powered">
-      <span class="text-caption">Powered By</span> 
-      <a href="http://www.vazilcompany.com" target="_blank"><img src="/logo-color.png" height="16"/></a>
+      </span>
+      <span class="fade_up_animation delay_600 delay-300">
+        Portfolio
+      </span>
+
+      <span class="fade_up_animation font-weight-bold text-h4 delay_600 delay-600">
+        2023
+      </span>
+      
+      <github-calendar class="ma-8"/>
+      
+      <div class="d-flex">
+        <div
+          v-for="(item,idx) in waveText"
+          :key="'wavt-' + idx"
+          class="fade_up_animation ma-1"
+          :class="'delay_' + (idx) * 100"
+          style="text-transform: uppercase;"
+        >
+          {{ item }}
+        </div>
+      </div>
+
     </div>
   </div>
 </template>
@@ -19,7 +37,14 @@
       //   this.start()
       // }
     },
+    data() { return {
+      isYearShow:false,
+      waveText:['s','u','r','f','i','n','g','.','.','.']
+    }},
     mounted() {
+      setTimeout(()=>{
+        this.isYearShow = true
+      }, 600)
     },
   }
 </script>

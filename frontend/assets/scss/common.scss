@@ -925,31 +925,50 @@ div:hover {
 /* animation */
 
 .fade_up_animation {
+  opacity: 0;
   animation-name: fade_up;
   animation-duration: 300ms;
   animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
 }
 
 .fade_right_animation {
+  opacity: 0;
   animation-name: fade_right;
   animation-duration: 300ms;
   animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
 }
 
 
 .fade_animation {
+  opacity: 0;
   animation-name: fade;
   animation-duration: 300ms;
   animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
 }
 
 .appear_animation {
+  opacity: 0;
   animation-name: appear;
   animation-delay: 300ms;
   animation-duration: 1000ms;
   animation-timing-function: ease-in-out;
 }
 
+.delay-300{
+  animation-delay: 300ms !important;
+}
+.delay-600{
+  animation-delay: 600ms !important;
+}
+.delay-900{
+  animation-delay: 900ms !important;
+}
+.delay-1200{
+  animation-delay: 1200ms !important;
+}
 .delay_100 {
   animation-duration: 400ms !important;
 }
@@ -989,6 +1008,44 @@ div:hover {
 .delay_1000 {
   animation-duration: 1300ms !important;
 }
+
+.delay_1100 {
+  animation-duration: 1400ms !important;
+}
+
+.delay_1200 {
+  animation-duration: 1500ms !important;
+}
+
+.delay_1300 {
+  animation-duration: 1600ms !important;
+}
+
+.delay_1400 {
+  animation-duration: 1700ms !important;
+}
+
+.delay_1500 {
+  animation-duration: 1800ms !important;
+}
+
+.delay_1600 {
+  animation-duration: 1900ms !important;
+}
+
+.delay_1700 {
+  animation-duration: 2000ms !important;
+}
+
+.delay_1800 {
+  animation-duration: 2100ms !important;
+}
+
+.delay_1900 {
+  animation-duration: 2200ms !important;
+}
+
+
 
 @keyframes appear {
   0% {
