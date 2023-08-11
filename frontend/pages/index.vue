@@ -230,7 +230,7 @@ export default {
 			scene.add(ambientLight);
 
 			camera = new THREE.PerspectiveCamera(47, width / height, 0.1, 1000);
-			camera.position.z = 800
+			camera.position.z = 1200
 			camera.position.y = -300
 			camera.position.x = -300
 
