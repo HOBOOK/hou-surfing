@@ -16,14 +16,19 @@
           
           <v-spacer/>
 
-          <header-item :icon="!$vuetify?.theme.dark ? 'mdi-weather-sunny' : 'mdi-weather-night'" class="mr-3" @click="toggleTheme()"/>
-
           <span class="text-subtitle-2">
             {{ $i18n.locale }}
           </span>
-          <header-item icon="mdi-web" @click="setLocale($i18n.locale === 'ko' ? 'en' : 'ko')">
-            
+          <header-item icon="mdi-web" @click="setLocale($i18n.locale === 'ko' ? 'en' : 'ko')" class="mr-3">
           </header-item>
+
+          <header-item :icon="!$vuetify?.theme.dark ? 'mdi-weather-sunny' : 'mdi-weather-night'" class="mr-3" @click="toggleTheme()"/>
+
+
+          <header-item icon="mdi-github" @click="$utils.openPage('https://github.com/HOBOOK')"/>
+
+
+          
           
         </v-row>
       </v-container>
