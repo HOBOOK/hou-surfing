@@ -25,6 +25,7 @@
 
 									<v-list-item-title class="index-title fade_up_animation delay_600 delay-600">
 										개발자 <span class="bold">박경호입니다.</span>
+										<v-icon>mdi-close</v-icon>
 									</v-list-item-title>
 
 									<v-list-item-action-text class="mt-12">
@@ -115,11 +116,22 @@ export default {
 			targets: { table: [], sphere: [], helix: [], grid: [] },
 			selectedPosition: null,
 			selectedObject: null,
+			selectedElement: null,
 			selectedRotation: null,
+			isSelected:false,
 		}
 	},
 	mounted() {
 		this.drawBackground()
+	},
+	watch:{
+		isSelected() {
+			if(this.isSelected) {
+				controls.enabled = false
+			} else {
+				controls.enabled = true
+			}
+		}
 	},
 	methods: {
 
@@ -226,6 +238,16 @@ export default {
 				details.innerHTML = content.content + '<br>' + content.month;
 				element.appendChild(details);
 
+				const closeButton = document.createElement('div')
+				closeButton.className = 'close'
+				closeButton.addEventListener('pointerdown', () => {
+
+					
+					this.unsetTarget()
+				})
+
+				element.appendChild(closeButton)
+
 
 				const objectCSS = new CSS3DObject(element);
 				objectCSS.position.x = Math.random() * 4000 - 2000;
@@ -236,46 +258,8 @@ export default {
 					if(this.selectedObject === objectCSS) {
 						return
 					}
-					
-					if(this.selectedObject) {
-						new TWEEN.Tween(this.selectedObject.position)
-							.to({ x: this.selectedPosition.x, y: this.selectedPosition.y, z: this.selectedPosition.z }, 1000)
-							.easing(TWEEN.Easing.Exponential.InOut)
-							.start();
 
-						new TWEEN.Tween(this.selectedObject.rotation)
-							.to({ x: this.selectedRotation.x, y: this.selectedRotation.y, z: this.selectedRotation.z }, 1000)
-							.easing(TWEEN.Easing.Exponential.InOut)
-							.start();
-
-						console.log(this.selectedRotation)
-					}
-
-
-					this.selectedObject = objectCSS
-
-					this.selectedPosition = JSON.parse(JSON.stringify(objectCSS.position))
-					this.selectedRotation = objectCSS.rotation
-
-
-
-					new TWEEN.Tween(objectCSS.position)
-						.to({ x: camera.position.x, y: camera.position.y + 200, z: camera.position.z - 700 }, 1000)
-						.easing(TWEEN.Easing.Exponential.InOut)
-						.start();
-
-					new TWEEN.Tween(objectCSS.rotation)
-						.to({ x: 0, y: 0, z: 0 }, 1000)
-						.easing(TWEEN.Easing.Exponential.InOut)
-						.start();
-
-
-					new TWEEN.Tween(this)
-						.to({}, 1000)
-						.onUpdate(this.render)
-						.start();
-
-					this.onClickCard(content)
+					this.setTarget(objectCSS, element)
 				})
 
 				scene.add(objectCSS);
@@ -406,8 +390,58 @@ export default {
 		 * Event
 		 */
 
-		onClickCard(content){
-		}
+		setTarget(objectCSS, element){
+			this.unsetTarget()
+
+			this.selectedObject = objectCSS
+			this.selectedElement = element
+
+			this.selectedPosition = JSON.parse(JSON.stringify(objectCSS.position))
+			this.selectedRotation = objectCSS.rotation
+
+			element.classList.add('selected')
+
+			new TWEEN.Tween(objectCSS.position)
+				.to({ x: camera.position.x, y: camera.position.y + 200, z: camera.position.z - 700 }, 1000)
+				.easing(TWEEN.Easing.Exponential.InOut)
+				.start();
+
+			new TWEEN.Tween(objectCSS.rotation)
+				.to({ x: 0, y: 0, z: 0 }, 1000)
+				.easing(TWEEN.Easing.Exponential.InOut)
+				.start();
+
+
+			new TWEEN.Tween(this)
+				.to({}, 1000)
+				.onUpdate(this.render)
+				.start();
+
+			this.isSelected = true
+		},
+
+		unsetTarget(){
+			if(this.selectedObject) {
+				new TWEEN.Tween(this.selectedObject.position)
+					.to({ x: this.selectedPosition.x, y: this.selectedPosition.y, z: this.selectedPosition.z }, 1000)
+					.easing(TWEEN.Easing.Exponential.InOut)
+					.start();
+
+				new TWEEN.Tween(this.selectedObject.rotation)
+					.to({ x: this.selectedRotation.x, y: this.selectedRotation.y, z: this.selectedRotation.z }, 1000)
+					.easing(TWEEN.Easing.Exponential.InOut)
+					.start();
+
+				this.selectedElement.classList.remove('selected')
+
+				new TWEEN.Tween(this)
+					.to({}, 1000)
+					.onUpdate(this.render)
+					.start();
+
+				this.isSelected = false
+			}
+		},
 	}
 }
 </script>
@@ -481,15 +515,54 @@ export default {
 		line-height: normal;
 		cursor: default;
 
-		&:hover{
-			box-shadow: 0px 0px 12px rgba(0, 255, 255, 0.75);
-			border: 1px solid rgba(127, 255, 255, 0.75);
-			cursor: pointer;
+		
+
+		
+		&.selected {
+			.close{
+				position: absolute;
+				top:4px;
+				left:4px;
+				height:20px;
+				width:20px;
+				z-index:5;
+				border-radius: 100%;
+				cursor: pointer;
+
+				&::after{
+					content:'\F0156';
+					font: normal normal normal 24px/1 "Material Design Icons";
+					font-size: 12px;
+					width:20px;
+					height:20px;
+					vertical-align: middle;
+					text-align: center;
+				}
+
+				&:hover{
+					box-shadow: 0px 0px 12px rgba(0, 255, 255, 0.75);
+				}
+
+				&:active{
+					box-shadow: 0px 0px 18px rgba(0, 255, 255, 0.75);
+				}
+			}
 		}
 
-		&:active{
-			box-shadow: 0px 0px 18px rgba(0, 255, 255, 0.75);
+		&:not(.selected) {
+			&:hover{
+				box-shadow: 0px 0px 12px rgba(0, 255, 255, 0.75);
+				border: 1px solid rgba(127, 255, 255, 0.75);
+				cursor: pointer;
+			}
+
+			&:active{
+				box-shadow: 0px 0px 18px rgba(0, 255, 255, 0.75);
+			}
+
 		}
+
+		
 
 		.number {
 			position: absolute;
