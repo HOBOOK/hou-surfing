@@ -28,12 +28,12 @@
 									</v-list-item-title>
 
 									<v-list-item-action-text class="mt-12">
-										<v-btn @click="transform(targets.table, 2000);" :elevation="0">
+										<v-btn @click="transform(targets.table, 1000);" :elevation="0">
 											
 										</v-btn>
-										<v-btn @click="transform(targets.sphere, 2000);" :elevation="0"/>
-										<v-btn @click="transform(targets.helix, 2000);" :elevation="0"/>
-										<v-btn @click="transform(targets.grid, 2000);" :elevation="0"/>
+										<v-btn @click="transform(targets.sphere, 1000);" :elevation="0"/>
+										<v-btn @click="transform(targets.helix, 1000);" :elevation="0"/>
+										<v-btn @click="transform(targets.grid, 1000);" :elevation="0"/>
 									</v-list-item-action-text>
 								</v-list-item-content>
 							</v-list-item>
@@ -113,7 +113,7 @@ export default {
 	data() {
 		return {
 			targets: { table: [], sphere: [], helix: [], grid: [] },
-			selectedPoistion: null,
+			selectedPosition: null,
 			selectedObject: null,
 			selectedRotation: null,
 		}
@@ -190,6 +190,7 @@ export default {
 			profileImage.style.borderRadius = '100%';
 			profileImage.style.userSelect = 'none'
 			profileImage.style.webkitUserDrag = 'none'
+			profileElement.style.userSelect = 'none'
 			profileElement.appendChild(profileImage)
 
 			const objectCSS = new CSS3DObject(profileElement);
@@ -237,22 +238,43 @@ export default {
 					}
 					
 					if(this.selectedObject) {
+						new TWEEN.Tween(this.selectedObject.position)
+							.to({ x: this.selectedPosition.x, y: this.selectedPosition.y, z: this.selectedPosition.z }, 1000)
+							.easing(TWEEN.Easing.Exponential.InOut)
+							.start();
 
-						this.selectedObject.position = this.selectedPoistion
-						this.selectedObject.rotation = this.selectedRotation
+						new TWEEN.Tween(this.selectedObject.rotation)
+							.to({ x: this.selectedRotation.x, y: this.selectedRotation.y, z: this.selectedRotation.z }, 1000)
+							.easing(TWEEN.Easing.Exponential.InOut)
+							.start();
 
+						console.log(this.selectedRotation)
 					}
 
-					this.selectedObject = objectCSS
-					this.selectedPoistion = JSON.parse(JSON.stringify(this.selectedObject.position))
-					this.selectedRotation = JSON.parse(JSON.stringify(this.selectedObject.rotation))
 
-					objectCSS.position.x = camera.position.x
-					objectCSS.position.y = camera.position.y + 200
-					objectCSS.position.z = camera.position.z - 700
-					objectCSS.rotation.x = 0
-					objectCSS.rotation.y = 0
-					objectCSS.rotation.z = 0
+					this.selectedObject = objectCSS
+
+					this.selectedPosition = JSON.parse(JSON.stringify(objectCSS.position))
+					this.selectedRotation = objectCSS.rotation
+
+
+
+					new TWEEN.Tween(objectCSS.position)
+						.to({ x: camera.position.x, y: camera.position.y + 200, z: camera.position.z - 700 }, 1000)
+						.easing(TWEEN.Easing.Exponential.InOut)
+						.start();
+
+					new TWEEN.Tween(objectCSS.rotation)
+						.to({ x: 0, y: 0, z: 0 }, 1000)
+						.easing(TWEEN.Easing.Exponential.InOut)
+						.start();
+
+
+					new TWEEN.Tween(this)
+						.to({}, 1000)
+						.onUpdate(this.render)
+						.start();
+
 					this.onClickCard(content)
 				})
 
@@ -324,7 +346,7 @@ export default {
 
 			}
 	
-			this.transform(this.targets.helix, 2000);
+			this.transform(this.targets.helix, 1000);
 
 
 			window.addEventListener('resize', this.onWindowResize);
@@ -385,7 +407,6 @@ export default {
 		 */
 
 		onClickCard(content){
-			console.log(content)
 		}
 	}
 }
@@ -483,7 +504,7 @@ export default {
 			top: 40px;
 			left: 0px;
 			right: 0px;
-			font-size: 60px;
+			font-size: 42px;
 			font-weight: bold;
 			color: rgba(255, 255, 255, 0.75);
 			text-shadow: 0 0 10px rgba(0, 255, 255, 0.95);
