@@ -3,7 +3,6 @@
 		<page-body class="index-container">
 			<div class="three-background">
 				<div id="container"></div>
-
 			</div>
 
 			<v-row no-gutters align="center" justify="center">
@@ -25,16 +24,18 @@
 
 									<v-list-item-title class="index-title fade_up_animation delay_600 delay-600">
 										개발자 <span class="bold">박경호입니다.</span>
-										<v-icon>mdi-close</v-icon>
 									</v-list-item-title>
 
 									<v-list-item-action-text class="mt-12">
-										<v-btn @click="transform(targets.table, 1000);" :elevation="0">
-											
+										<v-btn @click="setSkill()" :elevation="0">
+											스킬
 										</v-btn>
-										<v-btn @click="transform(targets.sphere, 1000);" :elevation="0"/>
-										<v-btn @click="transform(targets.helix, 1000);" :elevation="0"/>
-										<v-btn @click="transform(targets.grid, 1000);" :elevation="0"/>
+										<v-btn @click="setProject()" :elevation="0">
+											프로젝트
+										</v-btn>
+										<v-btn @click="setLink()" :elevation="0">
+											마이링크
+										</v-btn>
 									</v-list-item-action-text>
 								</v-list-item-content>
 							</v-list-item>
@@ -47,6 +48,15 @@
 				</v-col>
 
 			</v-row>
+
+			<v-navigation-drawer
+				:value="isSelected"
+				right
+				absolute
+			>
+				{{ selectedContent }}
+
+			</v-navigation-drawer>
 
 		</page-body>
 	</div>
@@ -61,50 +71,8 @@ import { CSS3DRenderer, CSS3DObject } from 'three/examples/jsm/renderers/CSS3DRe
 
 let scene, renderer, space, light, camera, controls;
 
-const contents = [
-	{
-		title:'아니',
-		year:'2023',
-		month:'9',
-		content:'ff'
-	},{
-		title:'아니',
-		year:'2023',
-		month:'9',
-		content:'ff'
-	},{
-		title:'아니',
-		year:'2023',
-		month:'9',
-		content:'ff'
-	},{
-		title:'아니',
-		year:'2023',
-		month:'9',
-		content:'ff'
-	},{
-		title:'아니',
-		year:'2023',
-		month:'9',
-		content:'ff'
-	}
-	// '아니', '진짜', '2023',
-	// 'He', 'Helium', '2023',
-	// 'Li', 'Lithium', '2023',
-	// 'Be', 'Beryllium', '2023',
-	// '아니', '진짜', '2023',
-	// 'He', 'Helium', '2023',
-	// 'Li', 'Lithium', '2023',
-	// 'Be', 'Beryllium', '2023',
-	// '아니', '진짜', '2023',
-	// 'He', 'Helium', '2023',
-	// 'Li', 'Lithium', '2023',
-	// 'Be', 'Beryllium', '2023',
-	// '아니', '진짜', '2023',
-	// 'He', 'Helium', '2023',
-	// 'Li', 'Lithium', '2023',
-	// 'Be', 'Beryllium', '2023'
-];
+
+
 
 const objects = [];
 
@@ -118,10 +86,72 @@ export default {
 			selectedObject: null,
 			selectedElement: null,
 			selectedRotation: null,
+			selectedContent: null,
 			isSelected:false,
+			
+			contents:[],
+			isSkillContetns: false,
+			isProjectContents: false,
+			isLinkContetns: false,
+			skillContents: [
+			{
+				title:'아니',
+				year:'2023',
+				month:'9',
+				content:'ff',
+				category:'',
+			},{
+				title:'아니',
+				year:'2023',
+				month:'9',
+				content:'ff'
+			},{
+				title:'아니',
+				year:'2023',
+				month:'9',
+				content:'ff'
+			}],
+			projectContents : [
+				{
+					title:'프프',
+					year:'2023',
+					month:'9',
+					content:'ff',
+					category:'',
+				},{
+					title:'프프',
+					year:'2023',
+					month:'9',
+					content:'ff'
+				},{
+					title:'프프',
+					year:'2023',
+					month:'9',
+					content:'ff'
+				}],
+
+			linkContents : [
+				{
+					title:'링크',
+					year:'2023',
+					month:'9',
+					content:'ff',
+					category:'',
+				},{
+					title:'링크',
+					year:'2023',
+					month:'9',
+					content:'ff'
+				},{
+					title:'링크',
+					year:'2023',
+					month:'9',
+					content:'ff'
+				}],
 		}
 	},
 	mounted() {
+		this.init()
 		this.drawBackground()
 	},
 	watch:{
@@ -138,11 +168,8 @@ export default {
 		/**
 		 * 3D Render
 		 */
-		drawBackground() {
-			//this.stats = new Stats()
-			//this.stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
-			//document.body.appendChild(this.stats.dom);
 
+		init() {
 			space = document.getElementsByClassName('three-background')[0]
 			scene = new THREE.Scene();
 			scene.fog = new THREE.FogExp2(0xe0e0e0, 0.01);
@@ -177,15 +204,20 @@ export default {
 			camera.position.y = -300
 			camera.position.x = -300
 
-
-
 			controls = new TrackballControls(camera, renderer.domElement);
 			controls.minDistance = 800;
 			controls.maxDistance = 3000;
 			controls.minPolarAngle = Math.PI / 5;
             controls.maxPolarAngle = Math.PI / 1.25;
 			controls.addEventListener('change', this.render);
+		},
+		drawBackground(transformType = 'helix') {
+			//this.stats = new Stats()
+			//this.stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
+			//document.body.appendChild(this.stats.dom);
 
+			
+			this.targets = { table: [], sphere: [], helix: [], grid: [] }
 			/**
 			 * 내 정보
 			 */
@@ -212,12 +244,12 @@ export default {
 
 			scene.add(objectCSS);
 
-
-
 			// table
 
-			for (let i = 0; i < contents.length; i ++) {
-				const content = contents[i]
+			console.log(this.contents)
+
+			for (let i = 0; i < this.contents.length; i ++) {
+				const content = this.contents[i]
 
 				const element = document.createElement('div');
 				element.className = 'element';
@@ -260,6 +292,7 @@ export default {
 					}
 
 					this.setTarget(objectCSS, element)
+					this.selectedContent = content
 				})
 
 				scene.add(objectCSS);
@@ -330,7 +363,7 @@ export default {
 
 			}
 	
-			this.transform(this.targets.helix, 1000);
+			this.transform(this.targets[transformType], 1000);
 
 
 			window.addEventListener('resize', this.onWindowResize);
@@ -384,6 +417,30 @@ export default {
 			controls.update();
 			requestAnimationFrame(this.animate);
 
+		},
+
+		setSkill(){
+			if(!this.isSkillContetns) {
+				this.contents.push(...this.skillContents)
+				this.isSkillContetns = true
+				this.drawBackground()
+			}
+		},
+
+		setProject(){
+			if(!this.isProjectContents) {
+				this.contents.push(...this.projectContents)
+				this.isProjectContents = true
+				this.drawBackground()
+			}
+		},
+
+		setLink(){
+			if(!this.isLinkContetns) {
+				this.contents.push(...this.linkContents)
+				this.isLinkContetns = true
+				this.drawBackground()
+			}
 		},
 
 		/**
@@ -453,6 +510,7 @@ export default {
 	align-items: center;
 	width: 100%;
 	position: relative;
+	user-select: none;
 
 	.index-title {
 		font-size: 2.6rem;
