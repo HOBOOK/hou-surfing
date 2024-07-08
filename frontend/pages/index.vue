@@ -68,8 +68,16 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import * as TWEEN from '@tweenjs/tween.js'
 import { TrackballControls } from 'three/examples/jsm//controls/TrackballControls.js';
 import { CSS3DRenderer, CSS3DObject } from 'three/examples/jsm/renderers/CSS3DRenderer.js';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { KTX2Loader } from 'three/examples/jsm/loaders/KTX2Loader.js';
+import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
+import { MeshoptDecoder } from 'three/examples/jsm/libs/meshopt_decoder.module.js';
+
+
+let gltfLoader = new GLTFLoader()
 
 let scene, renderer, space, light, camera, controls;
+let animationIds = []
 
 
 
@@ -179,6 +187,8 @@ export default {
 
 
 			renderer = new CSS3DRenderer();
+			//renderer = window.renderer = new THREE.WebGLRenderer({alpha: true, antialias: this.$store.state.three?.graphic?.antialias === true, powerPreference: 'high-performance'  });
+
 			renderer.setSize(width, height);
 			space.appendChild(renderer.domElement);
 
@@ -193,13 +203,15 @@ export default {
 			light.shadow.camera.near = 0.1;
 			light.shadow.camera.far = 1000;
 			scene.add(light);
-			light.position.set(0, this.offsetDistance, 0);
+			light.position.set(0, 20, 10);
 
 
 			const ambientLight = new THREE.AmbientLight(0x555555, 1);
 			scene.add(ambientLight);
 
 			camera = new THREE.PerspectiveCamera(47, width / height, 0.1, 1000);
+			// camera.position.set(0,0,0)
+			
 			camera.position.z = 1200
 			camera.position.y = -300
 			camera.position.x = -300
@@ -214,6 +226,55 @@ export default {
             controls.mouseButtons.RIGHT = THREE.MOUSE.ROTATE
 			controls.addEventListener('change', this.render);
 		},
+
+		
+
+        focusCameraToObject(object, distance = 5){
+            controls.enabled = false
+            object.updateMatrixWorld(true);
+            const box = new THREE.Box3().setFromObject(object);
+            const center = new THREE.Vector3();
+            box.getCenter(center);
+
+
+            controls.target.set(center.x, center.y, center.z);
+
+            let direction = new THREE.Vector3().subVectors(new THREE.Vector3(20, 20, 20), center);
+            direction.normalize().multiplyScalar(distance);
+
+            let newCameraPos = new THREE.Vector3().addVectors(center, direction);
+
+            let step = 0
+			let animations = []
+            function animate() {
+                if(step < 1) {
+                    step += 0.015; 
+                    camera.position.lerpVectors(camera.position, newCameraPos, step);
+                    animations.push(requestAnimationFrame(animate));
+                } else {
+                    controls.enabled = true
+					animations.forEach(id => cancelAnimationFrame(id))
+                }
+            }
+
+            animations.push(requestAnimationFrame(animate));
+        },
+
+		loadObject(url) {
+            return new Promise((resolve, reject) => {
+                gltfLoader.load(url, (object) => {
+                    const obj = object.scene || object.scenes[0]
+                    obj.traverse((node) => {
+                        if(node.isMesh) {
+                            //node.castShadow = true
+                            node.receiveShadow = true
+
+                        }
+                    })
+                    resolve(obj)
+                }, undefined, reject)
+            })
+        },
 
 		drawBackground(transformType = 'helix') {
 			//this.stats = new Stats()
@@ -250,8 +311,6 @@ export default {
 
 			// table
 
-			console.log(this.contents)
-
 			for (let i = 0; i < this.contents.length; i ++) {
 				const content = this.contents[i]
 
@@ -286,9 +345,9 @@ export default {
 
 
 				const objectCSS = new CSS3DObject(element);
-				objectCSS.position.x = Math.random() * 4000 - 2000;
-				objectCSS.position.y = Math.random() * 4000 - 2000;
-				objectCSS.position.z = Math.random() * 4000 - 2000;
+				// objectCSS.position.x = Math.random() * 4000 - 2000;
+				// objectCSS.position.y = Math.random() * 4000 - 2000;
+				// objectCSS.position.z = Math.random() * 4000 - 2000;
 
 				element.addEventListener('pointerdown', () => {
 					if(this.selectedObject === objectCSS) {
@@ -315,22 +374,22 @@ export default {
 
 			const vector = new THREE.Vector3();
 
-			for (let i = 0, l = objects.length; i < l; i++) {
+			// for (let i = 0, l = objects.length; i < l; i++) {
 
-				const phi = Math.acos(- 1 + (2 * i) / l);
-				const theta = Math.sqrt(l * Math.PI) * phi;
+			// 	const phi = Math.acos(- 1 + (2 * i) / l);
+			// 	const theta = Math.sqrt(l * Math.PI) * phi;
 
-				const object = new THREE.Object3D();
+			// 	const object = new THREE.Object3D();
 
-				object.position.setFromSphericalCoords(800, phi, theta);
+			// 	object.position.setFromSphericalCoords(800, phi, theta);
 
-				vector.copy(object.position).multiplyScalar(2);
+			// 	vector.copy(object.position).multiplyScalar(2);
 
-				object.lookAt(vector);
+			// 	object.lookAt(vector);
 
-				this.targets.sphere.push(object);
+			// 	this.targets.sphere.push(object);
 
-			}
+			// }
 
 			// helix
 
@@ -355,19 +414,19 @@ export default {
 
 			// grid
 
-			for (let i = 0; i < objects.length; i++) {
+			// for (let i = 0; i < objects.length; i++) {
 
-				const object = new THREE.Object3D();
+			// 	const object = new THREE.Object3D();
 
-				object.position.x = ((i % 5) * 400) - 800;
-				object.position.y = (- (Math.floor(i / 5) % 5) * 400) + 800;
-				object.position.z = (Math.floor(i / 25)) * 1000 - 2000;
+			// 	object.position.x = ((i % 5) * 400) - 800;
+			// 	object.position.y = (- (Math.floor(i / 5) % 5) * 400) + 800;
+			// 	object.position.z = (Math.floor(i / 25)) * 1000 - 2000;
 
-				this.targets.grid.push(object);
+			// 	this.targets.grid.push(object);
 
-			}
+			// }
 	
-			this.transform(this.targets[transformType], 1000);
+			this.transform(this.targets[transformType]);
 
 
 			window.addEventListener('resize', this.onWindowResize);
@@ -376,7 +435,7 @@ export default {
 
 		},
 
-		transform(targets, duration) {
+		transform(targets, duration = 1000) {
 
 			TWEEN.removeAll();
 
@@ -419,8 +478,23 @@ export default {
 		animate() {
 			TWEEN.update();
 			controls.update();
-			requestAnimationFrame(this.animate);
 
+			for(let obj of objects) {
+				obj.lookAt(camera.position)
+			}
+
+			if(this.selectedObject) {
+
+				let direction = new THREE.Vector3();
+				camera.getWorldDirection(direction);
+
+				let objectPosition = new THREE.Vector3();
+				objectPosition.addVectors(camera.position, direction.multiplyScalar(600));
+				this.selectedObject.position.set(objectPosition.x, objectPosition.y, objectPosition.z);
+				this.selectedObject.lookAt(camera.position)
+			}
+
+			animationIds.push(requestAnimationFrame(this.animate))
 		},
 
 		setSkill(){
@@ -462,13 +536,19 @@ export default {
 
 			element.classList.add('selected')
 
+			let direction = new THREE.Vector3();
+			camera.getWorldDirection(direction);
+
+			let objectPosition = new THREE.Vector3();
+			objectPosition.addVectors(camera.position, direction.multiplyScalar(600));
+
 			new TWEEN.Tween(objectCSS.position)
-				.to({ x: camera.position.x, y: camera.position.y + 200, z: camera.position.z - 700 }, 1000)
+				.to({ x: objectPosition.x, y: objectPosition.y, z: objectPosition.z }, 1000)
 				.easing(TWEEN.Easing.Exponential.InOut)
 				.start();
 
 			new TWEEN.Tween(objectCSS.rotation)
-				.to({ x: 0, y: 0, z: 0 }, 1000)
+				.to({ x: camera.rotation.x, y: camera.rotation.y, z: camera.rotation.z }, 1000)
 				.easing(TWEEN.Easing.Exponential.InOut)
 				.start();
 

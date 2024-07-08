@@ -8,6 +8,11 @@ import webpack from 'webpack'
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   mode: 'spa',
+  ssr: false,
+  target: 'static', // 정적 웹사이트임을 명시
+  router: {
+    base: '/HOBOOK/' // github repository 이름 넣기
+  },
   head: {
     script: [
       // { src: 'https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js' },
@@ -173,10 +178,6 @@ export default {
     healthy: () => {
       return JSON.stringify({result: 'ok'})
     }
-  },
-
-  router:{
-    // middleware: ['loading'],
   },
 
   // auth:{
