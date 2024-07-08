@@ -155,13 +155,13 @@ export default {
 		this.drawBackground()
 	},
 	watch:{
-		isSelected() {
-			if(this.isSelected) {
-				controls.enabled = false
-			} else {
-				controls.enabled = true
-			}
-		}
+		// isSelected() {
+		// 	if(this.isSelected) {
+		// 		controls.enabled = false
+		// 	} else {
+		// 		controls.enabled = true
+		// 	}
+		// }
 	},
 	methods: {
 
@@ -204,13 +204,17 @@ export default {
 			camera.position.y = -300
 			camera.position.x = -300
 
-			controls = new TrackballControls(camera, renderer.domElement);
+			controls = new OrbitControls(camera, renderer.domElement);
 			controls.minDistance = 800;
 			controls.maxDistance = 3000;
 			controls.minPolarAngle = Math.PI / 5;
             controls.maxPolarAngle = Math.PI / 1.25;
+			controls.mouseButtons.LEFT = THREE.MOUSE.NONE;
+            controls.mouseButtons.MIDDLE = THREE.MOUSE.PAN;
+            controls.mouseButtons.RIGHT = THREE.MOUSE.ROTATE
 			controls.addEventListener('change', this.render);
 		},
+
 		drawBackground(transformType = 'helix') {
 			//this.stats = new Stats()
 			//this.stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
