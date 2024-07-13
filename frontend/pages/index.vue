@@ -608,6 +608,7 @@ export default {
 	.index-subtitle {
 		font-size: 1.3rem;
 		font-family: Pretendard-Medium !important;
+		margin:8px 0;
 	}
 
 	.index-item {

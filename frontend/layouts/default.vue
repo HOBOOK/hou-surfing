@@ -10,26 +10,42 @@
     >
       <v-container fill-height>
         <v-row no-gutters align="center">
-          <v-btn text plain @click="$router.push('/')" class="mx-0 px-0">
-            <v-img src="/logo.png" contain width="48" height="48"/>
-          </v-btn>
-          
-          <v-spacer/>
+          <v-col cols="4">
+            <v-row no-gutters align="center">
+              <div class="logo-cover" @click="$router.push('/')">
+                <v-img src="/logo.png" contain width="48" height="48"/>
+                <span>
+                  Gyeongho
+                </span>
+              </div>
+            </v-row>
+          </v-col>
+          <v-col cols="4">
+            
+            <v-row no-gutters align="center" justify="center">
+              <div class="menu-cover">
+                <a
+                  v-for="(item, idx) in menus"
+                  :key="'menu-' + idx"
+                  @click="$router.push(item.router)"
+                >
+                  {{ $t(item.title) }}
 
-          <span class="text-subtitle-2">
-            {{ $i18n.locale }}
-          </span>
-          <header-item icon="mdi-web" @click="setLocale($i18n.locale === 'ko' ? 'en' : 'ko')" class="mr-3">
-          </header-item>
+              </a>
+              </div>
+            </v-row>
+          </v-col>
+          <v-col cols="4">
+            <v-row no-gutters align="center" justify="end">
+              <span class="text-subtitle-2">
+                {{ $i18n.locale }}
+              </span>
+              <header-item icon="mdi-web" @click="setLocale($i18n.locale === 'ko' ? 'en' : 'ko')" class="mr-3"/>
 
-          <header-item :icon="!$vuetify?.theme.dark ? 'mdi-weather-sunny' : 'mdi-weather-night'" class="mr-3" @click="toggleTheme()"/>
-
-
-          <header-item icon="mdi-github" @click="$utils.openPage('https://github.com/HOBOOK')"/>
-
-
-          
-          
+              <header-item :icon="!$vuetify?.theme.dark ? 'mdi-weather-sunny' : 'mdi-weather-night'" class="mr-3" @click="toggleTheme()"/>
+              <header-item icon="mdi-github" @click="$utils.openPage('https://github.com/HOBOOK')"/>
+            </v-row>
+          </v-col>
         </v-row>
       </v-container>
     </v-app-bar>
@@ -75,18 +91,12 @@ export default{
     loadingInit:false, 
     drawer: null, 
     notifications:[],
-    navMenuList:[
-      {
-        title:'',
-        menus: [
-          {title: 'home', router:'/', icon:'mdi-home-roof'},
-          {title: 'dashboard', router:'/dashboard', icon:'mdi-view-dashboard'},
-          {title: 'metrics', router:'/metrics', icon:'mdi-chart-arc'},
-          {title: 'cctv', router:'/cctv', icon:'mdi-cctv'},
-          {title: 'robots', router:'/robots', icon:'mdi-robot-industrial'},
-        ]
-      },
-    ],
+    menus: [
+      {title: 'home', router:'/', icon:'mdi-home-roof'},
+      {title: 'project', router:'/project', icon:'mdi-view-dashboard'},
+      {title: 'blog', router:'/blog', icon:'mdi-view-dashboard'},
+      {title: 'courses', router:'/courses', icon:'mdi-view-dashboard'},
+    ]
   }),
   computed:{
     isExpandNav() {
@@ -188,10 +198,33 @@ export default{
   .v-app-bar {
     transition-property: transform, left, right, box-shadow, max-width, width;
     min-width: 320px;
-    
-    .system-title{
-      padding:0px 8px 0 12px; font-size:1.1rem;
+
+    .logo-cover{
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      -webkit-user-select:none;
+      -moz-user-select:none;
+      -ms-user-select:none;
+      user-select:none;
+      font-size: 1.1rem;
       font-family: "Pretendard-ExtraBold", sans-serif !important;
+      cursor: pointer;
+      &:hover{
+        opacity: 0.8;
+      }
+    }
+
+    .menu-cover{
+      font-size: 1rem;
+      a {
+        color: currentColor !important;
+        margin:0 16px !important;
+        &:hover{
+          opacity: 0.8;
+        }
+      }
+
     }
   }
 }

@@ -21,7 +21,6 @@ export default{
 
 <style lang="scss">
 .page-body{
-    padding:0px 12px;
 
     &.no-gutters{
         padding:0px;
