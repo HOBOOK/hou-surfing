@@ -14,12 +14,12 @@
             <v-row no-gutters align="center">
               <v-hover v-slot="{hover}" class="logo-cover" @click="$router.push('/')">
                 <span v-if="$utils.checkViewMode(2, $vuetify)">
-                  <v-img :class="hover ? 'jumping' : ''" src="/img/logo.png" contain width="48" height="48"/>
+                  <v-img :class="hover ? 'jumping' : ''" src="../img/logo.png" contain width="48" height="48"/>
                   Gyeongho
                 </span>
 
                 <span v-else>
-                  <v-img :class="hover ? 'jumping' : ''" src="/img/logo.png" contain width="32" height="32"/>
+                  <v-img :class="hover ? 'jumping' : ''" src="../img/logo.png" contain width="32" height="32"/>
                 </span>
               </v-hover>
             </v-row>
