@@ -5,45 +5,51 @@
       fixed
       flat
       clipped-left
-      shrink-on-scroll
+      :shrink-on-scroll="$utils.checkViewMode(2, $vuetify)"
       color="transparent"
     >
       <v-container fill-height>
         <v-row no-gutters align="center">
-          <v-col cols="4">
+          <v-col cols="3">
             <v-row no-gutters align="center">
-              <div class="logo-cover" @click="$router.push('/')">
-                <v-img src="/logo.png" contain width="48" height="48"/>
-                <span>
+              <v-hover v-slot="{hover}" class="logo-cover" @click="$router.push('/')">
+                <span v-if="$utils.checkViewMode(2, $vuetify)">
+                  <v-img :class="hover ? 'jumping' : ''" src="/logo.png" contain width="48" height="48"/>
                   Gyeongho
                 </span>
-              </div>
+
+                <span v-else>
+                  <v-img :class="hover ? 'jumping' : ''" src="/logo.png" contain width="32" height="32"/>
+                </span>
+              </v-hover>
             </v-row>
           </v-col>
-          <v-col cols="4">
+          <v-col cols="6">
             
-            <v-row no-gutters align="center" justify="center">
+            <v-row no-gutters align="center" justify="center" v-if="$utils.checkViewMode(2, $vuetify)">
               <div class="menu-cover">
                 <a
                   v-for="(item, idx) in menus"
                   :key="'menu-' + idx"
                   @click="$router.push(item.router)"
+                  :class="{selected: item.router === $route.path}"
                 >
                   {{ $t(item.title) }}
 
               </a>
               </div>
             </v-row>
+
           </v-col>
-          <v-col cols="4">
+          <v-col cols="3">
             <v-row no-gutters align="center" justify="end">
               <span class="text-subtitle-2">
                 {{ $i18n.locale }}
               </span>
-              <header-item icon="mdi-web" @click="setLocale($i18n.locale === 'ko' ? 'en' : 'ko')" class="mr-3"/>
+              <header-item icon="mdi-web" @click="setLocale($i18n.locale === 'ko' ? 'en' : 'ko')" class="ml-3"/>
 
-              <header-item :icon="!$vuetify?.theme.dark ? 'mdi-weather-sunny' : 'mdi-weather-night'" class="mr-3" @click="toggleTheme()"/>
-              <header-item icon="mdi-github" @click="$utils.openPage('https://github.com/HOBOOK')"/>
+              <header-item :icon="!$vuetify?.theme.dark ? 'mdi-weather-sunny' : 'mdi-weather-night'" class="ml-3" @click="toggleTheme()"/>
+              <!-- <header-item icon="mdi-github" class="ml-3" @click="$utils.openPage('https://github.com/HOBOOK')"/> -->
             </v-row>
           </v-col>
         </v-row>
@@ -71,7 +77,7 @@ export default{
   head () {
     return {
       titleTemplate(title) {
-        return `${title} | ${this.$route.meta.title || ''}`
+        return `${title} ${this.$route.meta.title ? ' - ' + this.$route.meta.title : ''}`
       }
     }
   },
@@ -96,6 +102,7 @@ export default{
       {title: 'project', router:'/project', icon:'mdi-view-dashboard'},
       {title: 'blog', router:'/blog', icon:'mdi-view-dashboard'},
       {title: 'courses', router:'/courses', icon:'mdi-view-dashboard'},
+      {title: 'guestbook', router:'/guestbook', icon:'mdi-view-dashboard'},
     ]
   }),
   computed:{
@@ -210,21 +217,23 @@ export default{
       font-size: 1.1rem;
       font-family: "Pretendard-ExtraBold", sans-serif !important;
       cursor: pointer;
-      &:hover{
-        opacity: 0.8;
-      }
     }
 
     .menu-cover{
       font-size: 1rem;
       a {
+        opacity: 0.8;
         color: currentColor !important;
         margin:0 16px !important;
         &:hover{
-          opacity: 0.8;
+          opacity: 1;
+        }
+        &.selected{
+          position: relative;
+          opacity: 1;
+          font-weight: bold;
         }
       }
-
     }
   }
 }

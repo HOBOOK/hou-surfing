@@ -3,4 +3,5 @@ export default{
     project:'project',
     blog:'blog',
     courses:'courses',
+    guestbook: 'guestbook'
 }

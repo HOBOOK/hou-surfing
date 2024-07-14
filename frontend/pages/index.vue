@@ -6,7 +6,7 @@
 			</div>
 
 			<v-row no-gutters align="center" justify="center">
-				<v-col cols="12">
+				<v-col cols="12" style="position: relative;">
 
 					<v-card class="index-content" color="transparent" min-width="360" style="width:100%;" flat>
 						<v-card-title>
@@ -14,7 +14,7 @@
 								<v-list-item-content>
 
 									<v-list-item-subtitle class="index-subtitle grey--text fade_up_animation delay_600">
-										코드위의 파도에 올라탄 캡틴 호우
+										#프로페셔널
 									</v-list-item-subtitle>
 
 
@@ -41,11 +41,10 @@
 							</v-list-item>
 						</v-card-title>
 					</v-card>
-				</v-col>
 
-				<v-col cols="12">
 
 				</v-col>
+
 
 			</v-row>
 
@@ -631,6 +630,7 @@ export default {
 		}
 
 	}
+
 }
 </style>
 

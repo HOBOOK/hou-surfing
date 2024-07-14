@@ -3,4 +3,5 @@ export default {
     project:'프로젝트',
     blog:'블로그',
     courses:'강좌',
+    guestbook: '방명록'
 }

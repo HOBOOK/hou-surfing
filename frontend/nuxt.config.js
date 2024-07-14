@@ -18,17 +18,17 @@ export default {
       // { src: 'https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js' },
       // { src: 'https://docs.opencv.org/3.4/opencv.js' },
     ],
-    titleTemplate: '호우서핑 - %s',
-    title: '호우서핑',
+    titleTemplate: 'Gyeongho Park - %s',
+    title: 'Gyeongho Park',
     htmlAttrs: {
       lang: 'ko'
     },
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'og:title', property: 'og:title', content: '호우서핑' },
-      { hid: 'og:site_name', property: 'og:site_name', content: '호우서핑' },
-      { hid: 'description', name: 'description', content: '경호우' },
+      { hid: 'og:title', property: 'og:title', content: 'Gyeongho Park' },
+      { hid: 'og:site_name', property: 'og:site_name', content: 'Gyeongho Park' },
+      { hid: 'description', name: 'description', content: 'Gyeongho Park' },
       { hid: 'og:image', property: 'og:image', content: 'https://d2q9yzkd471o7j.cloudfront.net/logo/head_logo.png?w=300&h=300' }
     ],
     link: [
