@@ -29,10 +29,10 @@ export default {
       { hid: 'og:title', property: 'og:title', content: 'Gyeongho Park' },
       { hid: 'og:site_name', property: 'og:site_name', content: 'Gyeongho Park' },
       { hid: 'description', name: 'description', content: 'Gyeongho Park' },
-      { hid: 'og:image', property: 'og:image', content: 'https://d2q9yzkd471o7j.cloudfront.net/logo/head_logo.png?w=300&h=300' }
+      { hid: 'og:image', property: 'og:image', content: '/HOBOOK/img/logo.png' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'icon', type: 'image/x-icon', href: '/HOBOOK/favicon.ico' },
       { rel: 'preconnect', href: 'https://fonts.gstatic.com' },
       { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap' },
       { rel: 'stylesheet', href: 'https://fonts.googleapis.com/earlyaccess/nanumgothic.css'},
